@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Winston Durand"]
   spec.email         = ["me@winstondurand.com"]
   spec.summary       = %q{Generates an SVG with text using the Hershey Vector Font}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  # spec.description   = %q{TODO: Write a longer description. Optional.}
+  # spec.homepage      = ""
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -20,4 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec", '~> 3.1.0'
+
+  spec.required_ruby_version = '>= 2.0.0'
 end
