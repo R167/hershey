@@ -30,18 +30,25 @@ module Hershey
     alias_method :write, :<<
 
     def write_out
-      new_page
+      # new_page
+      str
+      current_offset = BUFFER
       @words.each do |word|
-        if word.spacing
-        @pages[-1] << word.to_path
+        if word.spacing + current_offset > width
+          @line += BUFFER * 3
+          current_offset = BUFFER
+        end
+        @svg << word.to_path
       end
+      @svg << "</svg>"
+      @svg
     end
 
     private
 
     def new_page
       @pages << Page.new(width: @width, height: @height)
-      @line += @vertical
+      @line = BUFFER
     end
   end
 end
