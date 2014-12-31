@@ -4,7 +4,7 @@ module Hershey
     SIDE = 10.freeze
     HEIGHT_STRING = "jfdsklahfdjksjhaljfdskahj".freeze
 
-    def initialize(width: 500, height: 500, spacing: 3, vertical: 20)
+    def initialize(width: 500, height: 500, spacing: 3, vertical: 20, font: :futural)
       @words = []
       @pages = []
       @width = width
@@ -13,6 +13,7 @@ module Hershey
       @line = BUFFER
       @vertical = vertical
       @closed = false
+      @font = font
       @svg = <<-HEADER
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -24,7 +25,7 @@ module Hershey
 
     def <<(text)
       text.split(' ').each do |word|
-        @words << Word.new(word)
+        @words << Word.new(word, font: @font)
       end
     end
 

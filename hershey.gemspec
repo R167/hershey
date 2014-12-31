@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["me@winstondurand.com"]
   spec.summary       = %q{Generates an SVG with text using the Hershey Vector Font}
   # spec.description   = %q{TODO: Write a longer description. Optional.}
-  # spec.homepage      = ""
+  spec.homepage      = "https://github.com/R167/hershey"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

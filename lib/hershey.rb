@@ -6,4 +6,9 @@ require_relative "hershey/version"
 require_relative "hershey/word"
 
 module Hershey
+  def self.svg(text, options = {})
+    doc = Document.new(options)
+    doc.write(text)
+    doc.svg
+  end
 end
