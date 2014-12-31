@@ -3,7 +3,7 @@
 require 'hershey'
 
 file = ARGV.shift
-width = ARGV.shift
+width = ARGV.shift.to_i
 text = ARGV.join(' ')
 
 open(file, 'w') {|f| f.write(Hershey.svg(text, width: width))}

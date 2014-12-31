@@ -24,8 +24,15 @@ module Hershey
     end
 
     def <<(text)
-      text.split(' ').each do |word|
-        @words << Word.new(word, font: @font)
+      word = ""
+      text.each_char do |c|
+        if c == " "
+          @words << :space
+        elsif c == "\n"
+          @words << :break
+        else
+          @words << Word.new(word, font: @font)
+        end
       end
     end
 
@@ -44,13 +51,21 @@ module Hershey
       current_offset = SIDE
       @svg << %Q{<g transform="translate(#{SIDE},#{@line})">}
       @words.each do |word|
-        if word.spacing + current_offset > @width
+        if word.is_a?(Word)
+          if word.spacing + current_offset > @width
+            @line += BUFFER * 2
+            current_offset = SIDE
+            @svg << %Q{</g><g transform="translate(#{SIDE},#{@line})">}
+          end
+          @svg << word.to_path(current_offset)
+          current_offset += word.spacing
+        elsif word == :space
+          current_offset += space
+        elsif word == :break
           @line += BUFFER * 2
           current_offset = SIDE
           @svg << %Q{</g><g transform="translate(#{SIDE},#{@line})">}
         end
-        @svg << word.to_path(current_offset)
-        current_offset += word.spacing + space
       end
       @svg << "</g></svg>"
       @svg.gsub!(HEIGHT_STRING, (@line + BUFFER).to_s)
