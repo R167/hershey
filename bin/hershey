@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby -w
+
+require 'hershey'
+
+file = ARGV.shift
+width = ARGV.shift
+text = ARGV.join(' ')
+
+open(file, 'w') {|f| f.write(Hershey.svg(text, width: width))}
