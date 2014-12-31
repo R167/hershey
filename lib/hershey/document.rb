@@ -28,12 +28,17 @@ module Hershey
       text.each_char do |c|
         if c == " "
           @words << :space
+          @words << Word.new(word, font: @font)
+          word = ''
         elsif c == "\n"
           @words << :break
-        else
           @words << Word.new(word, font: @font)
+          word = ''
+        else
+          word << c
         end
       end
+      @words << Word.new(word, font: @font) unless word == ''
     end
 
     alias_method :write, :<<
