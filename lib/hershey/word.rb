@@ -17,7 +17,7 @@ module Hershey
       @spacing ||= @characters.inject(0) {|memo, c| memo + c.spacing}
     end
 
-    def to_path
+    def to_path(current_offset)
       offset = 0
       letters = []
       @characters.each do |c|
@@ -25,7 +25,7 @@ module Hershey
         offset += c.spacing
       end
 
-      %Q{<g>#{letters.join}</g>}
+      %Q{<g transform="translate(#{current_offset},0)">#{letters.join}</g>}
     end
   end
 end

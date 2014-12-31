@@ -2,10 +2,10 @@ module Hershey
   class Character
     OFFSET = ' '.ord
 
-    def initialize(character, font: :furtural)
+    def initialize(character, font: :futural)
       @char = character.to_s[0] || ' '
       @font = font
-      @match = FONTS[@font][@char.ord - OFFSET].match(/\A(?<midpoint>[\d-]+) +(?<width>[\d-]+) ?(?<path>\w*)\Z/)
+      @match = FONTS[@font][@char.ord - OFFSET].match(/\A(?<midpoint>[\d-]+) +(?<width>[\d-]+) ?(?<path>[\w -]*)\Z/)
       @path = @match['path']
       @midpoint = @match['midpoint'].to_i
       @add_offset = @match['width'].to_i - @midpoint
