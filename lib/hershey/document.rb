@@ -27,13 +27,13 @@ module Hershey
       word = ""
       text.each_char do |c|
         if c == " "
+          @words << Word.new(word, font: @font)
+          word = ''
           @words << :space
-          @words << Word.new(word, font: @font)
-          word = ''
         elsif c == "\n"
-          @words << :break
           @words << Word.new(word, font: @font)
           word = ''
+          @words << :break
         else
           word << c
         end
