@@ -1,9 +1,61 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 
 require 'hershey'
+require 'optparse'
 
-file = ARGV.shift
-width = ARGV.shift.to_i
-text = ARGV.join(' ')
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: hershey [options]"
 
-open(file, 'w') {|f| f.write(Hershey.svg(text, width: width))}
+  opts.on("-w", "--width WIDTH", Integer, "Width of the pages") do |vars|
+    options[:width] = vars
+  end
+
+  opts.on("-h", "--height HEIGHT", Integer, "The height per page (defaults to 8.5x11 ratio)") do |f|
+    options[:height] = f
+  end
+
+
+  opts.on("-i", "--input INFILE", "The input file (required)") do |f|
+    options[:input] = f
+  end
+
+  opts.on("-o", "--output OUTFILE", "The output file base name (required)") do |f|
+    options[:output] = f
+  end
+
+  options[:max] = 100
+  opts.on("-m", "--max MAX", Integer, "Max pages") do |range|
+    options[:max] = range
+  end
+
+  opts.on("-o", "--output OUTFILE", "The output file base name") do |f|
+    options[:output] = f
+  end
+
+  opts.on("-f", "--font FONT", Hershey::FONTS.keys, "The font to use") do |f|
+    options[:font] = f.downcase
+  end
+  opts.separator("Fonts: #{Hershey::FONTS.keys.map {|k| k.to_s}.join(', ')}")
+
+  opts.on("--help", "Shows this help message") do
+    puts opts
+    exit
+  end
+end.parse!
+
+unless options[:width].is_a?(Integer)
+  puts "Missing number of variables for equation"
+  puts "Call with -h or --help for help"
+  exit(1)
+end
+
+options[:height] ||= (options[:width] / 8.5 * 11 / 20).ceil * 20
+
+pages = Hershey.svgs(File.read(options[:input]), options.select{|k,_| [:width,:height,:font].include?(k)})
+
+pages.each_with_index do |page, i|
+  f = "#{options[:output]}_#{i}.svg"
+  puts "#{f}: #{page.each_char.inject(0) {|m,s| s == 'L' ? m + 1 : m}} line segments."
+  open(f, 'w') {|f| f.write(page)}
+end
