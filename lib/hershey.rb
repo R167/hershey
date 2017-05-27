@@ -1,6 +1,10 @@
+require 'i18n'
+
+I18n.available_locales = [:en] | I18n.available_locales
+
+require_relative "hershey/font"
 require_relative "hershey/character"
 require_relative "hershey/document"
-require_relative "hershey/font"
 require_relative "hershey/page"
 require_relative "hershey/version"
 require_relative "hershey/word"

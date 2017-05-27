@@ -62,7 +62,8 @@ module Hershey
       @words.each do |word|
         begin
           @pages.last.write(word)
-        rescue PageFullError => e
+        rescue PageFullError
+          puts "Page # #{@pages.length}"
           new_page
           retry
         end
