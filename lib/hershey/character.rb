@@ -25,22 +25,11 @@ module Hershey
     private
 
     def info
-      @@chars ||= {}
-      unless @@chars[@char]
-        match = Hershey::FONTS[@font][@char.to_s.ord - OFFSET].match(MATCHER)
-        @@chars[@char] = {
-          path: path_handler(match['path']),
-          midpoint: match['midpoint'].to_i,
-          spacing: match['width'].to_i - match['midpoint'].to_i,
-        }
-      end
-      @@chars[@char]
+      Hershey::FONTS[@font][@char.to_s.ord - OFFSET]
     end
 
     def path_handler(path)
-      n = `node /Users/wmd/tmp/smooth.js '#{path}'`.strip
-      puts n
-      n
+      path || (p `node /Users/wmd/tmp/smooth.js '#{path}'`.strip)
     end
   end
 end

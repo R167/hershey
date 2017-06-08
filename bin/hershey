@@ -5,7 +5,12 @@ require 'optparse'
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: hershey [options]"
+  opts.banner = "Usage: hershey [options]\nVersion: #{Hershey::VERSION}"
+
+  opts.on("-v", "--version", "Print version info") do
+    puts "Hershey Vector Fonts CLI Tool. Version: #{Hershey::VERSION}"
+    exit
+  end
 
   opts.on("-w", "--width WIDTH", Integer, "Width of the pages") do |vars|
     options[:width] = vars
@@ -14,7 +19,6 @@ OptionParser.new do |opts|
   opts.on("-h", "--height HEIGHT", Integer, "The height per page (defaults to 8.5x11 ratio)") do |f|
     options[:height] = f
   end
-
 
   opts.on("-i", "--input INFILE", "The input file (required)") do |f|
     options[:input] = f
