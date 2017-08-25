@@ -21,7 +21,6 @@ module Hershey
   end
 
   def self.svgs(text, options = {})
-    puts options
     doc = Document.new(options)
     doc.write(text)
     doc.svgs
