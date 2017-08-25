@@ -27,6 +27,7 @@ module Hershey
     private
 
     def info
+      @@chars = {}
       @@char_list ||= YAML.load_file(File.join(File.dirname(__FILE__), 'fonts_full.yaml'))[@font]
       @@chars[@char] ||= @@char_list[@char.to_s.ord - OFFSET]
       unless @@chars[@char]
